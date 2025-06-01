@@ -16,7 +16,38 @@
 
 Data Ingestion -> Pre-processing -> Feature Engg. -> Model Training -> Model Evalution
 
+## `ML Flow:`
 
+- 1. Create a Expriments folder. In, the folder do the 1st expriment in .ipynb file.
+
+- 2. Create  a src folder, make data_ingestion.py file.`In this file we will fetch the data from a github. But in future we will fetch data from database of AWS S3 bucket.`
+
+<br>
+<br>
+
+# `#01 Logging Module in Python:`
+
+<br>
+<br>
+
+In python logging module, we create a object of logging.getLogger("data_injection") where the object name is logger. Where, we specify the name of that looging.getLogger() object. After that, logger.setLevel("DUBUG").
+
+Mainly, we use **logging.StreamHandler()** and **logging.FileHandler()**. Logging module is used manage the log. **StreamHandler()** is used to show the log in the terminal and **FileHandler()** is used to save the log into a file. 
+
+**What is formater?**
+By using logging.Formatter() we format how we show the output. we pass all the formater to our console_handeler or file_handeler.
+
+**What is setLevel()?**
+When we do code, everthing is working or not to ensure that we do debug. There also be warnning etc. In production level we will also get error. In, setLevel() we define the which kind of error we want to get with our logging function. Level can be define by, 
+- DEBUG
+- INFO
+- WARNNING
+- ERROR
+- CRITICAL
+If we set DEBUG then our logging will catch INFO,WARNNING,ERROR and CRITICAL Error.
+
+<br>
+<br>
 
 
 
