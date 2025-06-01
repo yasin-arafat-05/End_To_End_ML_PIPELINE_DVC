@@ -30,6 +30,24 @@ Data Ingestion -> Pre-processing -> Feature Engg. -> Model Training -> Model Eva
 <br>
 <br>
 
+```python
+
+import logging
+
+logger = logging.getLogger("data_injection")
+logger.setLevel("DEBUG")
+formater = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+console_handeler = logging.StreamHandler()
+console_handeler.setLevel("DEBUG")
+console_handeler.setFormatter(formater)
+
+file_handeler = logging.FileHandler()
+file_handeler.setLevel("DEBUG")
+file_handeler.setFormatter(formater)
+
+```
+
 In python logging module, we create a object of logging.getLogger("data_injection") where the object name is logger. Where, we specify the name of that looging.getLogger() object. After that, logger.setLevel("DUBUG").
 
 Mainly, we use **logging.StreamHandler()** and **logging.FileHandler()**. Logging module is used manage the log. **StreamHandler()** is used to show the log in the terminal and **FileHandler()** is used to save the log into a file. 
