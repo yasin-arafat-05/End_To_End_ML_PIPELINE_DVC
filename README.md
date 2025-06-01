@@ -46,6 +46,9 @@ file_handeler = logging.FileHandler()
 file_handeler.setLevel("DEBUG")
 file_handeler.setFormatter(formater)
 
+
+logger.addHandeler(console_handeler)
+logger.addHandeler(file_handeler)
 ```
 
 In python logging module, we create a object of logging.getLogger("data_injection") where the object name is logger. Where, we specify the name of that looging.getLogger() object. After that, logger.setLevel("DUBUG").
@@ -62,6 +65,7 @@ When we do code, everthing is working or not to ensure that we do debug. There a
 - WARNNING
 - ERROR
 - CRITICAL
+
 If we set DEBUG then our logging will catch INFO,WARNNING,ERROR and CRITICAL Error.
 
 <br>
