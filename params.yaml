@@ -5,11 +5,11 @@ data_ingestion:
 
 # for src/feature_engineering.py file 
 feature_engineering:
-  max_features: 50 
+  max_features: 50
 
 
 # for src/model_building.py file 
 model_building:
-  n_estimators: 25
+  n_estimators: 60
   random_state: 2 
 

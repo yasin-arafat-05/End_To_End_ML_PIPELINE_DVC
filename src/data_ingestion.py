@@ -23,7 +23,7 @@ console_handeler.setFormatter(formater)
 
 
 # FileHandler for save the log into file
-log_file_path = os.path.join(dirs,"data_ingestion.txt")
+log_file_path = os.path.join(dirs,"data_ingestion.log")
 file_handeler = logging.FileHandler(log_file_path)
 file_handeler.setLevel("DEBUG")
 file_handeler.setFormatter(formater)

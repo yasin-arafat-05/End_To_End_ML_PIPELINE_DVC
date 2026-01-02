@@ -101,6 +101,8 @@ If we set DEBUG then our logging will catch INFO,WARNNING,ERROR and CRITICAL Err
 - **11>** Now git add, commit, push<br>
 
 
+`Now, if we chage the parameter value 14-15 times how will we track which model perform best?? Or for which paramter we get the best accuracy??? To do this we need to track the artfact with dvclive.`
+
 **#4. Expermients with DVC:**
 - **12>** pip install dvclive<br>
 - **13>** Add the dvclive code block (mentioned below)<br>

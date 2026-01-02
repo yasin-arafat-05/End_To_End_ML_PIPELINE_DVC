@@ -1,13 +1,14 @@
 import os
+import yaml
+import json
+import pickle
+import logging
 import numpy as np
 import pandas as pd
-import pickle
-import json
+from dvclive import Live
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
-import logging
-import yaml
 
-#from dvclive import Live
+
 
 # Ensure the "logs" directory exists
 log_dir = 'logs'
@@ -16,37 +17,47 @@ os.makedirs(log_dir, exist_ok=True)
 # logging configuration
 logger = logging.getLogger('model_evaluation')
 logger.setLevel('DEBUG')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 
 console_handler = logging.StreamHandler()
 console_handler.setLevel('DEBUG')
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
+
+
 
 log_file_path = os.path.join(log_dir, 'model_evaluation.log')
 file_handler = logging.FileHandler(log_file_path)
 file_handler.setLevel('DEBUG')
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
 file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-# def load_params(params_path: str) -> dict:
-#     """Load parameters from a YAML file."""
-#     try:
-#         with open(params_path, 'r') as file:
-#             params = yaml.safe_load(file)
-#         logger.debug('Parameters retrieved from %s', params_path)
-#         return params
-#     except FileNotFoundError:
-#         logger.error('File not found: %s', params_path)
-#         raise
-#     except yaml.YAMLError as e:
-#         logger.error('YAML error: %s', e)
-#         raise
-#     except Exception as e:
-#         logger.error('Unexpected error: %s', e)
-#         raise
+
+
+# =========== Load the parameter ===========
+def load_params(params_path:str)->dict:
+    """Load Parameters from params yaml file.
+    Args:
+        params_path (str): path of the yaml file.
+    Returns:
+        dict: all the parameter
+    """
+    try:
+        with open (params_path,'r') as f:
+            params = yaml.safe_load(f)
+            logger.debug("Parameter file load successfully from {}".format(params_path))
+            return params
+    except FileNotFoundError as e:
+        logger.error("Paramer file is not found at {}".format(params_path))
+        raise
+    except yaml.YAMLError as e:
+        logger.error("Yaml file format is not correct file from {}".format(params_path))
+        raise
+    except Exception as e:
+        logger.error("Unexpected Error while loading params files from {}".format(params_path))
+        raise
+    
 
 def load_model(file_path: str):
     """Load the trained model from a file."""
@@ -116,8 +127,8 @@ def save_metrics(metrics: dict, file_path: str) -> None:
 
 def main():
     try:
-        #params = load_params(params_path='params.yaml')
         
+        params = load_params(params_path='params.yaml')
         clf = load_model('./models/model.pkl')
         test_data = load_data('./data/processed/test_tfidf.csv')
         
@@ -125,13 +136,14 @@ def main():
         y_test = test_data.iloc[:, -1].values
 
         metrics = evaluate_model(clf, X_test, y_test)
-
-        # Experiment tracking using dvclive
-        # with Live(save_dvc_exp=True) as live:
-        #     live.log_metric('accuracy', accuracy_score(y_test, y_test))
-        #     live.log_metric('precision', precision_score(y_test, y_test))
-        #     live.log_metric('recall', recall_score(y_test, y_test))
-        #     live.log_params(params)
+        
+        # expriment live with dvclive:
+        with Live(save_dvc_exp=True) as live:
+            live.log_metric('accuracy',metrics["accuracy"])
+            live.log_metric('precision',metrics["precision"])
+            live.log_metric('recall',metrics["recall"])
+            live.log_metric('auc',metrics["auc"])
+            live.log_params(params)
         
         save_metrics(metrics, 'reports/metrics.json')
     except Exception as e:
