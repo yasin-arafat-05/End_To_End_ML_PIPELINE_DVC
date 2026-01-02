@@ -1,3 +1,9 @@
+# data model and repoart will be track by DVC so, git should ignore them:
+data 
+models
+reports 
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
