@@ -86,16 +86,20 @@ If we set DEBUG then our logging will catch INFO,WARNNING,ERROR and CRITICAL Err
 
 `Now, in our src file we have i) data_ingestion.py ii) data_preprocessing.py iii) feature_engineering.py iv) model_building.py v) model_evaluation.py But in Production Environment we need to automated all those thing. To do so we can make another .py file to connect all those thing. But it's not efficient. We will Make a Pipeline by the help of DVC.`
 
+
 **#2. Setting up dcv pipeline (without params)**
 - **5>** Create dvc.yaml file and add stages to it. <br>
 - **6>** dvc init then do "dvc repro" to test the pipeline automation. (check dvc dag) <br>
 - **7>** Now git add, commit, push <br>
+
+`While working with ML, we have to do hyper parameter tunning or we need to change the parameter value. So, instead of going each file and change the parameter it's a very headache work. However, is there one file and we do changes in that file. So, we will create a another yaml file named params.ymal file. where we keep all the parameter.`
 
 **#3. Setting up dcv pipeline (with params)**
 - **8>** add params.yaml file <br>
 - **9>** Add the params setup (mentioned below)<br>
 - **10>** Do "dvc repro" again to test the pipeline along with the params<br>
 - **11>** Now git add, commit, push<br>
+
 
 **#4. Expermients with DVC:**
 - **12>** pip install dvclive<br>

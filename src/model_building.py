@@ -32,22 +32,29 @@ logger.addHandler(file_handler)
 
 
 
-# def load_params(params_path: str) -> dict:
-#     """Load parameters from a YAML file."""
-#     try:
-#         with open(params_path, 'r') as file:
-#             params = yaml.safe_load(file)
-#         logger.debug('Parameters retrieved from %s', params_path)
-#         return params
-#     except FileNotFoundError:
-#         logger.error('File not found: %s', params_path)
-#         raise
-#     except yaml.YAMLError as e:
-#         logger.error('YAML error: %s', e)
-#         raise
-#     except Exception as e:
-#         logger.error('Unexpected error: %s', e)
-#         raise
+# =========== Load the parameter ===========
+def load_params(params_path:str)->dict:
+    """Load Parameters from params yaml file.
+    Args:
+        params_path (str): path of the yaml file.
+    Returns:
+        dict: all the parameter
+    """
+    try:
+        with open (params_path,'r') as f:
+            params = yaml.safe_load(f)
+            logger.debug("Parameter file load successfully from {}".format(params_path))
+            return params
+    except FileNotFoundError as e:
+        logger.error("Paramer file is not found at {}".format(params_path))
+        raise
+    except yaml.YAMLError as e:
+        logger.error("Yaml file format is not correct file from {}".format(params_path))
+        raise
+    except Exception as e:
+        logger.error("Unexpected Error while loading params files from {}".format(params_path))
+        raise
+    
 
 
 def load_data(file_path: str) -> pd.DataFrame:
@@ -130,8 +137,10 @@ def save_model(model, file_path: str) -> None:
 
 def main():
     try:
-        #params = load_params('params.yaml')['model_building']
-        params = {"n_estimators":25,"random_state":2}
+        # instead of hard coding load it from params files
+        #params = {"n_estimators":25,"random_state":2}
+        params = load_params('params.yaml')['model_building']
+
         train_data = load_data('./data/processed/train_tfidf.csv')
         X_train = train_data.iloc[:, :-1].values
         y_train = train_data.iloc[:, -1].values

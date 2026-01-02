@@ -1,0 +1,15 @@
+# for src/data_ingestion.py file 
+data_ingestion:
+  test_size: 0.3
+
+
+# for src/feature_engineering.py file 
+feature_engineering:
+  max_features: 50 
+
+
+# for src/model_building.py file 
+model_building:
+  n_estimators: 25
+  random_state: 2 
+

@@ -1,4 +1,5 @@
 import os 
+import yaml
 import logging
 import pandas as pd 
 from sklearn.model_selection import train_test_split
@@ -31,7 +32,29 @@ file_handeler.setFormatter(formater)
 logger.addHandler(console_handeler)
 logger.addHandler(file_handeler)
 
-
+# =========== Load the parameter ===========
+def load_params(params_path:str)->dict:
+    """Load Parameters from params yaml file.
+    Args:
+        params_path (str): path of the yaml file.
+    Returns:
+        dict: all the parameter
+    """
+    try:
+        with open (params_path,'r') as f:
+            params = yaml.safe_load(f)
+            logger.debug("Parameter file load successfully from {}".format(params_path))
+            return params
+    except FileNotFoundError as e:
+        logger.error("Paramer file is not found at {}".format(params_path))
+        raise
+    except yaml.YAMLError as e:
+        logger.error("Yaml file format is not correct file from {}".format(params_path))
+        raise
+    except Exception as e:
+        logger.error("Unexpected Error while loading params files from {}".format(params_path))
+        raise
+    
 
 # =========== Load the dataset ===========
 def load_data(data_url:str) -> pd.DataFrame:
@@ -81,7 +104,11 @@ def save_data(train:pd.DataFrame,test:pd.DataFrame,data_path:str)->None:
 
 def main():
     try: 
-        test_size = 0.2 
+        # instead of hard coding load it from params files:
+        #test_size = 0.2 
+        params = load_params('params.yaml')
+        test_size = params['data_ingestion']['test_size']
+        
         # we are taking it from github but later we will take it from aws or other resources
         data_url ="https://raw.githubusercontent.com/yasin-arafat-05/End_To_End_ML_PIPELINE_DVC/refs/heads/main/expriments/spam.csv"
         df = load_data(data_url=data_url)
