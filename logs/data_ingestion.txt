@@ -1,3 +1,6 @@
 2026-01-01 11:38:01,360 - data_injection - DEBUG - Data Loaded from: https://raw.githubusercontent.com/yasin-arafat-05/End_To_End_ML_PIPELINE_DVC/refs/heads/main/expriments/spam.csv
 2026-01-01 11:38:01,363 - data_injection - DEBUG - basic data preprocessing is complete
 2026-01-01 11:38:01,415 - data_injection - DEBUG - Train and test data save ./data/raw
+2026-01-02 15:29:51,932 - data_injection - DEBUG - Data Loaded from: https://raw.githubusercontent.com/yasin-arafat-05/End_To_End_ML_PIPELINE_DVC/refs/heads/main/expriments/spam.csv
+2026-01-02 15:29:51,935 - data_injection - DEBUG - basic data preprocessing is complete
+2026-01-02 15:29:51,965 - data_injection - DEBUG - Train and test data save ./data/raw
